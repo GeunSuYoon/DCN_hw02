@@ -86,6 +86,7 @@ change_rt_table()을 사용하여 두 엔드포인트의 라우팅 테이블을 
 라우팅 정보는 목적지의 IP 접두사, 넥스트 홉의 IP 주소, 목적지까지의 총 메트릭을 운반해야 합니다. 라우팅 프로토콜이 사용하는 패킷 헤더의 형식은 프로토콜 유형에 의존하지 않습니다.
 패킷 헤더의 형식은 표 1과 같습니다.
 ![image](https://github.com/GeunSuYoon/data_commu_network_hw02/assets/146644182/17a87158-fa62-4b96-8432-abddd22db997)
+
   protocol segment는 우리에게 routing protocol의 타입을 보여준다. Disctance-vector : 0x80, Link-state routing protocol : 0x81, Path-vector routing protocol : 0x82
   Type segment는 routing protocol 내 packet의 타입을 보여준다. 이번 시뮬레이션에서 해당 값은 0xFF다.
   Length는 header와 body를 포함한 packet의 총 길이를 보여준다. Length의 단위는 byte다. A packet의 body가 없다면 length는 16일 것이다.
@@ -108,6 +109,7 @@ Additional data의 인덱스는 forwarding table의 인덱스를 따른다.
 
 Distance-vector routing protocol을 위한 packet body의 segment는 Table 2와 같다.
 ![image](https://github.com/GeunSuYoon/data_commu_network_hw02/assets/146644182/245ba235-5440-44f4-82bd-5b9a517fb55f)
+
 하나의 routing information을 위한 packet body의 segment는 12bytes로 이루어진다.
 우리는 routing table 내의 모든 data를 위핸 이 segments를 보낸다.
 만약 routing table에 routing information이 n IP개가 존재한다면, 우리는 12n bytes의 packet body를 보낼 것이다.
@@ -125,6 +127,7 @@ AS의 인덱스는 ASN의 인덱스와 같다.
 
 Link-state routing protocol을 위한 packet body의 segment는 Table 3에 나와있다.
 ![image](https://github.com/GeunSuYoon/data_commu_network_hw02/assets/146644182/962a09a9-49ed-4423-bf43-02b8c9e00ab8)
+
 하나의 routing information을 위한 packet body segment는 4m + 12 bytes로 이뤄진다.(m은 autonomous systems의 숫자이다.)
 Routers는 모든 data를 위한 segments를 routing table과 그들 자신에게 보낸다.
 만약 routing table 내에 정해진 routing information이 n IP라면, 4(n+1)(m+1) bytes의 packet body를 보낸다.
