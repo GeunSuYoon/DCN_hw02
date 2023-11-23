@@ -78,3 +78,65 @@ change_rt_table()을 사용하여 두 엔드포인트의 라우팅 테이블을 
 시뮬레이터는 라우팅 테이블을 업데이트하기 위해 update_rt_table() - send_packet_neighbor()를 반복합니다.
 이하 그림은 구현해야 할 시뮬레이터의 로직 플로우입니다.
 ![image](https://github.com/GeunSuYoon/data_commu_network_hw02/assets/146644182/063085a2-081f-47ec-9f3f-6dacc61b24fc)
+
+### C. Detail in Routing Protocol
+우리는 먼저 구현할 프로토콜에 공통점을 소개합니다.
+3개의 라우팅 프로토콜은 동기식 업데이트를 사용합니다. 즉, 각 라우터는 자신의 라우팅 테이블을 동시에 업데이트합니다.
+또한 패킷을 이웃 AS로 동시에 보냅니다.
+라우팅 정보는 목적지의 IP 접두사, 넥스트 홉의 IP 주소, 목적지까지의 총 메트릭을 운반해야 합니다. 라우팅 프로토콜이 사용하는 패킷 헤더의 형식은 프로토콜 유형에 의존하지 않습니다.
+패킷 헤더의 형식은 표 1과 같습니다.
+![image](https://github.com/GeunSuYoon/data_commu_network_hw02/assets/146644182/17a87158-fa62-4b96-8432-abddd22db997)
+  protocol segment는 우리에게 routing protocol의 타입을 보여준다. Disctance-vector : 0x80, Link-state routing protocol : 0x81, Path-vector routing protocol : 0x82
+  Type segment는 routing protocol 내 packet의 타입을 보여준다. 이번 시뮬레이션에서 해당 값은 0xFF다.
+  Length는 header와 body를 포함한 packet의 총 길이를 보여준다. Length의 단위는 byte다. A packet의 body가 없다면 length는 16일 것이다.
+  IP address of Source and IP address of destination 은 각 router의 IPv4 address이다. 이 IPv4 address는 32bit으로 표현 가능하다.
+  Timestamp는 업데이트 동기화를 돕기 위한 32-bit int이다.
+
+이 packet header는 class packet에서 구현된다.
+
+Routing table 내의 routing information은 the destination IP prefix, next hop IP address, total metric to destination으로 구성되는 것이 일반적이다.
+각 routing algorithm에서 추가 데이터는 the routing information에 포함된다.
+추가 데이터는 나중에 자세히 다룰 것이다.
+
+#### Distance-Vector Routing Protocol
+Distance-vector routing protocol에서 우리는 packets가 각 이웃 AS를 통과할 때 total metrics를 이용해 next hop을 업데이트한다.
+
+Distance-vector routing algorithm의 addtional data는 metric_via_neighbor, 우리가 각 이웃 AS를 통과할 때 destination까지 모든 metric이다.
+The additional data의 크기는 이웃 AS의 숫자와 같다.
+Additional data의 인덱스는 forwarding table의 인덱스를 따른다.
+초기 metric_via_neighbor의 값은 INF이다.
+
+Distance-vector routing protocol을 위한 packet body의 segment는 Table 2와 같다.
+![image](https://github.com/GeunSuYoon/data_commu_network_hw02/assets/146644182/245ba235-5440-44f4-82bd-5b9a517fb55f)
+하나의 routing information을 위한 packet body의 segment는 12bytes로 이루어진다.
+우리는 routing table 내의 모든 data를 위핸 이 segments를 보낸다.
+만약 routing table에 routing information이 n IP개가 존재한다면, 우리는 12n bytes의 packet body를 보낼 것이다.
+
+#### Link-State Routiong Protocol
+Link-state routing protocol에서, 우리는 link의 information을 이용해 next hop을 update할 것이다.
+먼저 인접한 matrix와 유사한 네트워크의 map을 만들 것이다.
+그리고 Dijkstra's algorithm을 이용해 link를 update 할 것이다.
+
+Link-state routing algorithm을 위한 추가 data는 ASN(autonomous system number)와 matric_to_AS다.
+matric_to_AS는 target AS가 ASN i와 이 metric이 연결되어 있음을 보여준다.
+만약 link가 존재하지 않는다면, 값은 INF일 것이다.
+Self-looping link는 존재하지 않다.
+AS의 인덱스는 ASN의 인덱스와 같다.
+
+Link-state routing protocol을 위한 packet body의 segment는 Table 3에 나와있다.
+![image](https://github.com/GeunSuYoon/data_commu_network_hw02/assets/146644182/962a09a9-49ed-4423-bf43-02b8c9e00ab8)
+하나의 routing information을 위한 packet body segment는 4m + 12 bytes로 이뤄진다.(m은 autonomous systems의 숫자이다.)
+Routers는 모든 data를 위한 segments를 routing table과 그들 자신에게 보낸다.
+만약 routing table 내에 정해진 routing information이 n IP라면, 4(n+1)(m+1) bytes의 packet body를 보낸다.
+
+init_rt_table()은 빈 함수이다.
+update_rt_table()은 update_map()과 update_table_dijkstra()로 이루어져있다.
+update_map()은 받은 packets를 이용해 the connection map을 update한다.
+update_table_dijkstra()는 the next hop과 Dijkstra's algorithm을 이용해 total metric을 update한다.
+
+Dijkstra's algorithm은 가장 짧은 길을 찾는다.
+방문하지 않은 가장 짧은 노드를 찾는다.
+그 후 그것을 계산하고 해당 노드가 존재하던 것 보다 짧으면 update한다.
+모든 노드 중 가장 짧은 길을 찾을 동안 반복한다.
+
+#### Path-Vector Routing Protocol
