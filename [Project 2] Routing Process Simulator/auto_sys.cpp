@@ -147,14 +147,19 @@ bool AS_Dist_Vect::update_rt_table(){
         Forward_Info fw_info = this->get_fw_info(fw_idx);
 
         // TODO 1-1 Allocate memory for body using 'new'. What is the number of body segments in the body? 
-        uint32_t* body;
+		int	num_segment = packet.get_len() / 4 - 4;
+		uint32_t* body = new uint32_t[num_segment];
         packet.get_body(body);
-        int num_segment;
+		// this->get_rt_table_len
 
-        for(int i = 0; i < num_segment; i++){
-            IP_prefix ip_tmp;
-            ip_tmp.set_IPv4(0); // change the input value using body;
-            ip_tmp.set_netmask(0); // change the input value using body;
+        for(int i = 0; i < (num_segment / 3); i++){
+			IP_prefix ip_tmp;
+			uint32_t	target_ip = body[3 * i];
+			uint32_t	target_net = body[3 * i + 1];
+			uint32_t	target_mtx = body[3 * i + 2];
+			
+            ip_tmp.set_IPv4(target_ip); // change the input value using body;
+            ip_tmp.set_netmask(target_net); // change the input value using body;
  
             int rt_idx = rt_table.find_idx(ip_tmp.get_IPv4());
 
@@ -164,17 +169,26 @@ bool AS_Dist_Vect::update_rt_table(){
             //          3. Routing table have information about IP address of segment.
             //          
 
-            if( false /*delete this*/){
+            if(pkt_src == ip_tmp.get_IPv4()){
                 // Case 1 IP address of segment is same as this AS.
-
+				ret = true;
             }
-            else if(false /*delete this*/){
+            else if(rt_idx == -1){
                 // Case 2 Routing table haven't yet known about IP address of segment.
                 // We should make new Routing_Info for rt_table.
                 // And initialize this Routing_Info.
                 // Routing_Table::init_and_add_rt_info() will help this
                 // Routing_Table_DV::init_rt_table() should be a good reference.
                 // Do we change the value 'ret'?
+       			Routing_Info* new_rt_table = rt_table.init_and_add_rt_info();
+        		Forward_Info fw_info = this->get_fw_info(i);
+				
+				new_rt_table->set_gateway(fw_info.get_IP_gateway());
+				new_rt_table->set_IP_prefix(fw_info.get_IP_AS());
+				new_rt_table->set_total_metric(fw_info.get_metric());
+				
+				new_rt_table->set_additional_data(metric_via_neighbor, num_segment, &target_mtx);
+				new_rt_table->set_additional_data_idx(metric_via_neighbor, rt_idx, target_mtx);
             }
             else{
                 // Case 3 Routing table have information about IP address of segment.
@@ -183,8 +197,10 @@ bool AS_Dist_Vect::update_rt_table(){
                 // We must always update the value. 
                 // Be careful overflow by controlling INF.
                 // Do we always change the value 'ret'? 
-                
+                Routing_Info* ptr_target_rt_info = rt_table.get_rt_info(rt_idx);
+				ptr_target_rt_info->set_additional_data_idx(metric_via_neighbor, rt_idx, target_mtx);
             }
+		printf("test\n");
         }
 
         delete[] body;
@@ -198,20 +214,28 @@ void AS_Dist_Vect::send_packet_neighbor(){
     int sz = this->get_rt_table_len();
 
     // TODO 2-1 Allocate memory for body using 'new'. And fill the body segment.
-    int body_size;
-    uint32_t* body = new uint32_t[body_size];
+    int len = sz * 12 + 16;
+    uint32_t* body = new uint32_t[3 * sz];
     
-    for(int i = 0;false;i++){
-        
+    for(int i = 0; i < sz; i++){
+		Routing_Info* ptr_rt_info = this->get_rt_info(i);
+        body[3 * i] = ptr_rt_info->get_IP_prefix().get_IPv4();
+        body[3 * i + 1] = ptr_rt_info->get_IP_prefix().get_netmask();
+        body[3 * i + 2] = ptr_rt_info->get_total_metric();
     }
     
     for(int i = 0; i < num_nb; i++){
         Packet packet;
         // TODO 2-2 set the value of packet without timestamp.
         // enumeration in forward.hpp will help this.
-
+		packet.set_body(len, body);
+		packet.set_dest(body[3 * i]);
+		packet.set_protocol(Distance_Vector);
+		packet.set_source(this->get_AS_IP().get_IPv4());
+		packet.set_type(Update);
         packet.set_timestamp(timestamp);
         this->get_ptr_neighbor(i)->receive_packet_neighbor(packet);
+		packet.print_packet();
     }
 
     delete[] body;

@@ -22,3 +22,9 @@ main.o : main.cpp
   
 clean : 
 	rm *.o
+
+fclean : clean
+	rm route_sim
+
+re : fclean
+	make route_sim
