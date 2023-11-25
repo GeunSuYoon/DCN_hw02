@@ -160,3 +160,12 @@ Dijkstra's algorithm은 가장 짧은 길을 찾는다.
   - 이후 AS[as_a]->get_fw_table_len()을 sz_a에 저장.
   - AS[as_a]에 fw_info_a를 추가하고 AS[as_b]를 neighbor로 추가한다.
   - fw_info_b는 fw_info_a에 대해 as_a와 as_b만 바꿔 진행한다.
+
+## init_simulation()
+  - 우선 num_AS_net만큼 각 AS[i]에 init_rt_table()과 send_packet_neighbor()로 rt_table을 초기화하고 해당 데이터를 페킷으로 이웃에 전달한다.
+  - while문을 실행한다.
+  - time_stamp를 늘리고 check_update_continue를 false로 설정한다.
+  - num_AS_net만큼 돌며 각 AS[i]에 update_rt_table()을 실행한 결과를 tmp에 저장한다.
+  - check_update_continue에 tmp의 결과를 |=로 저장한다.
+  - tmp가 참일 경우 send_packet_neighbor()를 실행해 패킷을 보낸다.
+  - 다 돌고 check_update_continue가 거짓일 경우 while문을 탈출한다.
