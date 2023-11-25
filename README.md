@@ -143,3 +143,11 @@ Dijkstra's algorithm은 가장 짧은 길을 찾는다.
 모든 노드 중 가장 짧은 길을 찾을 동안 반복한다.
 
 #### Path-Vector Routing Protocol
+
+flow
+make_network(char *filename) 함수:
+filename으로 들어온 csv 파일을 연다.
+첫 줄의 숫자는 AS의 개수(num_as)로, 숫자만큼 AS를 만든다.
+이후 num_as개의 줄의 모양은 "???.???.???.???,???,"로 ',' 앞은 ipv4, 뒤는 netmask로 i번째 AS에 각 줄번째의 ipv4, netmask, i, num_as를 보내 AS를 셋팅.
+중간에 있는 숫자는 link의 개수(num_link).
+이후 num_link개의 줄의 모양은 "???,???,???," 로 각 숫자는 as_a, as_b, metric으로 저장돼 make_link 함수로 전달된다.
