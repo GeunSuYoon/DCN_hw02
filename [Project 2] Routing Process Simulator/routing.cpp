@@ -55,7 +55,7 @@ void Routing_Info_DV::set_additional_data(add_t ad, int num_data, uint32_t* addi
 };
 
 void Routing_Info_DV::set_additional_data_idx(add_t ad, int idx, uint32_t additional_data){
-    if(ad == additional::metric_via_neighbor){
+	if(ad == additional::metric_via_neighbor){
         this->set_metric_via_neighbor_idx(idx, additional_data);
     }
 };
@@ -71,7 +71,7 @@ void Routing_Info_DV::set_metric_via_neighbor(int num_nb, uint32_t* metric_via_n
 
 void Routing_Info_DV::set_metric_via_neighbor_idx(int idx, uint32_t metric_via_neighbor_idx){
     if(idx < 0 || idx >= num_nb){
-        printf("error : it could get segmentation fault");
+        printf("error : it could get segmentation fault\n");
         return;
     }
     this->metric_via_neighbor[idx] = metric_via_neighbor_idx;

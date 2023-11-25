@@ -62,7 +62,7 @@ int Forward_Table::get_size(){
 
 Forward_Info Forward_Table::get_fw_info(int idx){
     if(idx < 0 || idx >= this->get_size()){
-        printf("index error");
+        printf("get_fw_info : index error idx : [%d]\n", idx);
         return fw_table[0];
     }
     return fw_table[idx];

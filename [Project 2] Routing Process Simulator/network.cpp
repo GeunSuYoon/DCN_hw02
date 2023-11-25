@@ -197,7 +197,6 @@ void Network::init_simulation(){
         for(int i = 0; i < this->num_AS_net; i++){
             tmp = AS[i]->update_rt_table();
             check_update_continue |= tmp;
-		printf("test\n");
             if(tmp)
                 AS[i]->send_packet_neighbor();
         }
