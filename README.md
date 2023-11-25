@@ -151,3 +151,12 @@ Dijkstra's algorithm은 가장 짧은 길을 찾는다.
   - 이후 num_as개의 줄의 모양은 "???.???.???.???,???,"로 ',' 앞은 ipv4, 뒤는 netmask로 i번째 AS에 각 줄번째의 ipv4, netmask, i, num_as를 보내 AS를 셋팅.
   - 중간에 있는 숫자는 link의 개수(num_link).
   - 이후 num_link개의 줄의 모양은 "???,???,???," 로 각 숫자는 as_a, as_b, metric으로 저장돼 make_link 함수로 전달된다.
+
+## make_link(int as_a, int as_b, uint32_t metric) 함수:
+  - forward_info fw_info_a, fw_info_b, IP_prefix ip_tmp 선언.
+  - fw_info_a에 정보를 저장하고 AS[as_a]에 해당 정보를 저장한다.
+  - as_b 번째 AS_IP를 ip_tmp에 저장한다.
+  - fw_info_a에 ip_tmp의 IPv4를 게이트웨이로, IP_AS를 ip_tmp로, metric을 metric으로 저장한다.
+  - 이후 AS[as_a]->get_fw_table_len()을 sz_a에 저장.
+  - AS[as_a]에 fw_info_a를 추가하고 AS[as_b]를 neighbor로 추가한다.
+  - fw_info_b는 fw_info_a에 대해 as_a와 as_b만 바꿔 진행한다.
