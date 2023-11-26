@@ -16,7 +16,7 @@
 			"request": "launch",
 			"name": "Debug",
 			"program": "${workspaceFolder}/route_sim",
-			"args": ["graph1.csv", "D"],
+			"args": ["graph3.csv", "D"],
 			"cwd": "${workspaceFolder}"
 		}
 	]

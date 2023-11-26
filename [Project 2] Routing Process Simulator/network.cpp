@@ -203,7 +203,7 @@ void Network::init_simulation(){
         if(!check_update_continue) break;
     }
     for(int i = 0; i < this->num_AS_net; i++){
-        //AS[i]->print_rt_table();
+        AS[i]->print_rt_table();
     }
 }
 
@@ -229,6 +229,7 @@ void Network::change_simulation(int as_a, int as_b, uint32_t metric_link){
 
     while(1){
         timestamp++;
+		printf("change %d[%d] %d[%d] %u start\n", as_a, fw_idx_a, as_b, fw_idx_b, metric_link);
         bool check_update_continue = false;
         for(int i = 0; i < this->num_AS_net; i++){
             bool tmp = AS[i]->update_rt_table();

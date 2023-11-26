@@ -116,11 +116,11 @@ void AS_Dist_Vect::init_rt_table(){
 
 }
 
-bool AS_Dist_Vect::update_rt_table(){
+bool AS_Dist_Vect::update_rt_table()
+{
     int num_nb = this->get_num_neighbor();
     //We will return this value. This value means that AS need to send packet to neighboring AS.
     bool ret = false;
-	
     while(!neighbor_pkt.empty()){
         
         Packet packet = neighbor_pkt.front();
@@ -150,7 +150,6 @@ bool AS_Dist_Vect::update_rt_table(){
 		uint32_t* body = new uint32_t[num_segment];
         packet.get_body(body);
 		// this->get_rt_table_len
-
         for(int i = 0; i < (num_segment / 3); i++){
 			IP_prefix ip_tmp;
 			uint32_t	target_ip = body[3 * i];
@@ -169,9 +168,7 @@ bool AS_Dist_Vect::update_rt_table(){
             //          
 
             if(this->get_AS_IP().get_IPv4() == ip_tmp.get_IPv4()){
-                // Case 1 IP address of segment is same as this AS.
-				// !!!! should update later
-            	continue;
+				continue ;
             }
             else if(rt_idx == -1){
                 // Case 2 Routing table haven't yet known about IP address of segment.
@@ -180,28 +177,29 @@ bool AS_Dist_Vect::update_rt_table(){
                 // Routing_Table::init_and_add_rt_info() will help this
                 // Routing_Table_DV::init_rt_table() should be a good reference.
                 // Do we change the value 'ret'?
-       			Routing_Info* new_rt_info = rt_table.init_and_add_rt_info();
-
-				new_rt_info->set_gateway(fw_info.get_IP_gateway());
-				new_rt_info->set_IP_prefix(ip_tmp);
-				uint32_t	new_rt_metric = target_mtx + fw_info.get_metric();
-				new_rt_info->set_total_metric(new_rt_metric);
-				
-				uint32_t* tmp_metric = new uint32_t[num_nb];
-				for(int j = 0; j < num_nb; j++){
-					if (j == fw_idx)
-						tmp_metric[j] = target_mtx;
-					else if (j == (fw_idx + 1 < num_nb)? fw_idx + 1 : 0)
-						tmp_metric[j] = fw_info.get_metric();
-					else{
-						tmp_metric[j] = INF;
+				Routing_Info	*gateway_rt_info = rt_table.get_rt_info(fw_idx);
+				uint32_t	new_rt_metric = target_mtx + gateway_rt_info->get_total_metric();
+				if (new_rt_metric >= target_mtx && new_rt_metric >= gateway_rt_info->get_total_metric())
+				{
+					Routing_Info	*new_rt_info = rt_table.init_and_add_rt_info();
+					new_rt_info->set_gateway(gateway_rt_info->get_gateway());
+					new_rt_info->set_IP_prefix(ip_tmp);
+					new_rt_info->set_total_metric(new_rt_metric);
+					
+					uint32_t* tmp_metric = new uint32_t[num_nb];
+					for(int j = 0; j < num_nb; j++){
+						if (j != fw_idx)
+							tmp_metric[j] = INF;
+						else
+							tmp_metric[j] = new_rt_metric;
 					}
+					new_rt_info->set_additional_data(metric_via_neighbor, num_nb, tmp_metric);
+					delete[] tmp_metric;
+					ret = true;
 				}
-				new_rt_info->set_additional_data(metric_via_neighbor, num_nb, tmp_metric);
-				delete[] tmp_metric;
-				ret = true;
-            }
-            else{
+			}
+            else
+			{
                 // Case 3 Routing table have information about IP address of segment.
                 // We should update metric_via_neighbor in Routing_Info.
                 // Updated value should be Metric to next hop+ Sum of the metric in the rest of the path.
@@ -209,17 +207,31 @@ bool AS_Dist_Vect::update_rt_table(){
                 // Be careful overflow by controlling INF.
                 // Do we always change the value 'ret'? 
 				Routing_Info	*target_rt_info = rt_table.get_rt_info(rt_idx);
-				if (target_rt_info->get_total_metric() > fw_info.get_metric() + target_mtx)
+				Routing_Info	*packet_rt_info = rt_table.get_rt_info(fw_idx);
+				uint32_t		new_rt_metric;
+				new_rt_metric = target_mtx + packet_rt_info->get_total_metric();
+				if (new_rt_metric >= target_mtx && new_rt_metric >= packet_rt_info->get_total_metric())
 				{
-					target_rt_info->set_gateway(fw_info.get_IP_AS().get_IPv4());
-					target_rt_info->set_total_metric(fw_info.get_metric() + target_mtx);
+					target_rt_info->set_additional_data_idx(metric_via_neighbor, fw_idx, new_rt_metric);
+					uint32_t	smallest_met = INF, cmp;
+					int	hop_idx = 0;
+					for (int idx = 0; idx < num_nb; idx++)
+					{
+						cmp = target_rt_info->get_additional_data_idx(metric_via_neighbor, idx);
+						if (smallest_met > cmp);
+						{
+							smallest_met = cmp;
+							hop_idx = idx;
+						}
+					}
+					target_rt_info->set_total_metric(smallest_met);
+					target_rt_info->set_gateway(rt_table.get_rt_info(hop_idx)->get_gateway());
 				}
             }
         }
-
         delete[] body;
-
     }
+	
     return ret;
 }
 
@@ -228,17 +240,19 @@ void AS_Dist_Vect::send_packet_neighbor(){
     int sz = this->get_rt_table_len();
 
     // TODO 2-1 Allocate memory for body using 'new'. And fill the body segment.
-    int len = sz * 12 + 16;
-    uint32_t* body = new uint32_t[3 * sz];
-    
-	// each fw_info of AS is target(body).
-    for(int i = 0; i < sz; i++){
+    int len = num_nb * 12 + 16;
+    uint32_t* body = new uint32_t[3 * num_nb];
+    for(int i = 0; i < num_nb; i++){
 		Routing_Info	*target_rt_info = this->get_rt_info(i);
         body[3 * i] = target_rt_info->get_IP_prefix().get_IPv4();
         body[3 * i + 1] = target_rt_info->get_IP_prefix().get_netmask();
         body[3 * i + 2] = target_rt_info->get_total_metric();
+		// for (int idx = 0; idx < sz; idx++)
+		// {
+		// 	this->get_rt_info(idx)->set_additional_data_idx(metric_via_neighbor, i, target_rt_info->get_total_metric());
+		// }
     }
-    
+
     for(int i = 0; i < num_nb; i++){
         Packet packet;
         // TODO 2-2 set the value of packet without timestamp.

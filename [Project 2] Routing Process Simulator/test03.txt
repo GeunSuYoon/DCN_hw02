@@ -1,0 +1,198 @@
+==== Routing Table ====
+IP of AS : 138.0.0.0
+ASN : 0
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 139.0.0.0
+Total metric : 7
+Metric via neighbor : 7 9 11 
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 9
+Metric via neighbor : 7 9 11 
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 11
+Metric via neighbor : 7 9 11 
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 20
+Metric via neighbor : 7 9 11 
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 20
+Metric via neighbor : 7 9 11 
+==== Routing Table ====
+IP of AS : 139.0.0.0
+ASN : 1
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 7
+Metric via neighbor : 7 10 15 
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 10
+Metric via neighbor : 7 10 15 
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 15
+Metric via neighbor : 7 10 15 
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 12
+Metric via neighbor : 7 10 15 
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 21
+Metric via neighbor : 7 10 15 
+==== Routing Table ====
+IP of AS : 140.0.0.0
+ASN : 2
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 9
+Metric via neighbor : 9 10 11 2 
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 139.0.0.0
+Total metric : 10
+Metric via neighbor : 9 10 11 2 
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 11
+Metric via neighbor : 9 10 11 2 
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 143.0.0.0
+Total metric : 2
+Metric via neighbor : 9 10 11 2 
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 143.0.0.0
+Total metric : 11
+Metric via neighbor : 9 10 11 2 
+==== Routing Table ====
+IP of AS : 141.0.0.0
+ASN : 3
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 139.0.0.0
+Total metric : 15
+Metric via neighbor : 15 11 6 
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 11
+Metric via neighbor : 15 11 6 
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 142.0.0.0
+Total metric : 6
+Metric via neighbor : 15 11 6 
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 20
+Metric via neighbor : 15 11 6 
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 13
+Metric via neighbor : 15 11 6 
+==== Routing Table ====
+IP of AS : 142.0.0.0
+ASN : 4
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 6
+Metric via neighbor : 6 9 
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 143.0.0.0
+Total metric : 9
+Metric via neighbor : 6 9 
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 21
+Metric via neighbor : 6 9 
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 143.0.0.0
+Total metric : 11
+Metric via neighbor : 6 9 
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 143.0.0.0
+Total metric : 20
+Metric via neighbor : 6 9 
+==== Routing Table ====
+IP of AS : 143.0.0.0
+ASN : 5
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 11
+Metric via neighbor : 11 2 9 
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 2
+Metric via neighbor : 11 2 9 
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 142.0.0.0
+Total metric : 9
+Metric via neighbor : 11 2 9 
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 12
+Metric via neighbor : 11 2 9 
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 13
+Metric via neighbor : 11 2 9
