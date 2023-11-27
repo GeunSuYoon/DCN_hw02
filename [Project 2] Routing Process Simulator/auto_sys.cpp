@@ -177,12 +177,11 @@ bool AS_Dist_Vect::update_rt_table()
                 // Routing_Table::init_and_add_rt_info() will help this
                 // Routing_Table_DV::init_rt_table() should be a good reference.
                 // Do we change the value 'ret'?
-				Routing_Info	*gateway_rt_info = rt_table.get_rt_info(fw_idx);
-				uint32_t	new_rt_metric = target_mtx + gateway_rt_info->get_total_metric();
-				if (new_rt_metric >= target_mtx && new_rt_metric >= gateway_rt_info->get_total_metric())
+				uint32_t	new_rt_metric = target_mtx + fw_info.get_metric();
+				if (!(new_rt_metric < fw_info.get_metric() || new_rt_metric < target_mtx))
 				{
 					Routing_Info	*new_rt_info = rt_table.init_and_add_rt_info();
-					new_rt_info->set_gateway(gateway_rt_info->get_gateway());
+					new_rt_info->set_gateway(fw_info.get_IP_gateway());
 					new_rt_info->set_IP_prefix(ip_tmp);
 					new_rt_info->set_total_metric(new_rt_metric);
 					
@@ -207,27 +206,33 @@ bool AS_Dist_Vect::update_rt_table()
                 // Be careful overflow by controlling INF.
                 // Do we always change the value 'ret'? 
 				Routing_Info	*target_rt_info = rt_table.get_rt_info(rt_idx);
-				Routing_Info	*packet_rt_info = rt_table.get_rt_info(fw_idx);
-				uint32_t		new_rt_metric;
-				new_rt_metric = target_mtx + packet_rt_info->get_total_metric();
-				if (new_rt_metric >= target_mtx && new_rt_metric >= packet_rt_info->get_total_metric())
+				Routing_Info	*gateway_rt_info = rt_table.get_rt_info(fw_idx);
+				uint32_t		new_metric = gateway_rt_info->get_total_metric() + target_mtx;
+				if (!(new_metric < gateway_rt_info->get_total_metric() || new_metric < target_mtx))
 				{
-					target_rt_info->set_additional_data_idx(metric_via_neighbor, fw_idx, new_rt_metric);
-					uint32_t	smallest_met = INF, cmp;
-					int	hop_idx = 0;
-					for (int idx = 0; idx < num_nb; idx++)
+					if (target_rt_info->get_additional_data_idx(metric_via_neighbor, fw_idx) != new_metric)
 					{
-						cmp = target_rt_info->get_additional_data_idx(metric_via_neighbor, idx);
-						if (smallest_met > cmp);
+						target_rt_info->set_additional_data_idx(metric_via_neighbor, fw_idx, new_metric);
+						uint32_t	min_matric = INF, tmp_metric;
+						int			hop_idx = 0;
+						for (int idx = 0; idx < num_nb; idx++)
 						{
-							smallest_met = cmp;
-							hop_idx = idx;
+							tmp_metric = target_rt_info->get_additional_data_idx(metric_via_neighbor, idx);
+							if (tmp_metric < min_matric)
+							{
+								min_matric = tmp_metric;
+								hop_idx = idx;
+							}
+						}
+						if (target_rt_info->get_total_metric() != min_matric)
+						{
+							target_rt_info->set_total_metric(min_matric);
+							target_rt_info->set_gateway(rt_table.get_rt_info(hop_idx)->get_gateway());
+							ret = true;
 						}
 					}
-					target_rt_info->set_total_metric(smallest_met);
-					target_rt_info->set_gateway(rt_table.get_rt_info(hop_idx)->get_gateway());
 				}
-            }
+			}
         }
         delete[] body;
     }
@@ -240,17 +245,13 @@ void AS_Dist_Vect::send_packet_neighbor(){
     int sz = this->get_rt_table_len();
 
     // TODO 2-1 Allocate memory for body using 'new'. And fill the body segment.
-    int len = num_nb * 12 + 16;
-    uint32_t* body = new uint32_t[3 * num_nb];
-    for(int i = 0; i < num_nb; i++){
-		Routing_Info	*target_rt_info = this->get_rt_info(i);
-        body[3 * i] = target_rt_info->get_IP_prefix().get_IPv4();
-        body[3 * i + 1] = target_rt_info->get_IP_prefix().get_netmask();
-        body[3 * i + 2] = target_rt_info->get_total_metric();
-		// for (int idx = 0; idx < sz; idx++)
-		// {
-		// 	this->get_rt_info(idx)->set_additional_data_idx(metric_via_neighbor, i, target_rt_info->get_total_metric());
-		// }
+    int len = sz * 12 + 16;
+    uint32_t* body = new uint32_t[3 * sz];
+    for(int i = 0; i < sz; i++){
+		Routing_Info	*body_rt_info = this->get_rt_info(i);
+        body[3 * i] = body_rt_info->get_IP_prefix().get_IPv4();
+        body[3 * i + 1] = body_rt_info->get_IP_prefix().get_netmask();
+        body[3 * i + 2] = body_rt_info->get_total_metric();
     }
 
     for(int i = 0; i < num_nb; i++){
