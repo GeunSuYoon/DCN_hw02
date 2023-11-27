@@ -146,11 +146,12 @@ bool AS_Dist_Vect::update_rt_table()
         Forward_Info fw_info = this->get_fw_info(fw_idx);
 
         // TODO 1-1 Allocate memory for body using 'new'. What is the number of body segments in the body? 
-		int	num_segment = packet.get_len() / 4 - 4;
-		uint32_t* body = new uint32_t[num_segment];
+		int	body_size = packet.get_len() / 4 - 4;
+		uint32_t* body = new uint32_t[body_size];
         packet.get_body(body);
-		// this->get_rt_table_len
-        for(int i = 0; i < (num_segment / 3); i++){
+		int	num_segment = body_size / 3;
+
+        for(int i = 0; i < num_segment; i++){
 			IP_prefix ip_tmp;
 			uint32_t	target_ip = body[3 * i];
 			uint32_t	target_net = body[3 * i + 1];
@@ -167,7 +168,7 @@ bool AS_Dist_Vect::update_rt_table()
             //          3. Routing table have information about IP address of segment.
             //          
 
-            if(this->get_AS_IP().get_IPv4() == ip_tmp.get_IPv4()){
+            if(this->get_AS_IP().get_IPv4() == target_ip){
 				continue ;
             }
             else if(rt_idx == -1){
@@ -245,8 +246,9 @@ void AS_Dist_Vect::send_packet_neighbor(){
     int sz = this->get_rt_table_len();
 
     // TODO 2-1 Allocate memory for body using 'new'. And fill the body segment.
-    int len = sz * 12 + 16;
-    uint32_t* body = new uint32_t[3 * sz];
+	int			body_size = 3 * sz;
+    uint16_t	len = 4 * (body_size + 4);
+    uint32_t	*body = new uint32_t[body_size];
     for(int i = 0; i < sz; i++){
 		Routing_Info	*body_rt_info = this->get_rt_info(i);
         body[3 * i] = body_rt_info->get_IP_prefix().get_IPv4();
@@ -373,9 +375,9 @@ void AS_Link_Stat::init_rt_table(){
 bool AS_Link_Stat::update_rt_table(){
     bool ret = update_map();
     // updates routing table using dijkstra algorithm when packet should be sent and size of routing table is equal to num_AS -1
-    if(this->get_rt_table_len() == this->get_num_AS() - 1 && ret){
-        update_table_dijkstra();
-    }
+    // if(this->get_rt_table_len() == this->get_num_AS() - 1){
+    //     update_table_dijkstra(); // test
+    // }
     return ret;
 }
 
@@ -384,7 +386,6 @@ bool AS_Link_Stat::update_map(){
     bool ret = false;
     int num_nb = this->get_num_neighbor();
     int num_AS = this->get_num_AS();
-
     while(!neighbor_pkt.empty()){
         Packet packet = neighbor_pkt.front();
         uint32_t pkt_dest = packet.get_dest();
@@ -407,16 +408,19 @@ bool AS_Link_Stat::update_map(){
         if(fw_idx == -1) {
             continue;
         }
-        
         // TODO 3-1 Allocate memory for body using 'new'. What is the number of body segments in the body?
-        uint32_t* body;
+        int			body_size = packet.get_len() / 4 - 4;
+		uint32_t	*body = new uint32_t[body_size];
         packet.get_body(body);
-        int num_segment;
+        int num_segment = body_size / (num_AS + 3);
 
         for(int i = 0; i < num_segment; i++){
-            IP_prefix ip_tmp;
-            ip_tmp.set_IPv4(0); // change the input value using body.
-            ip_tmp.set_netmask(0); // change the input value using body.
+			uint32_t	target_ip = body[(num_AS + 3) * i];
+			uint32_t	target_net = body[(num_AS + 3) * i + 1];
+			uint32_t	target_ASN = body[(num_AS + 3) * i + 2];
+            IP_prefix	ip_tmp;
+            ip_tmp.set_IPv4(target_ip); // change the input value using body.
+            ip_tmp.set_netmask(target_net); // change the input value using body.
 
             int rt_idx = rt_table.find_idx(ip_tmp.get_IPv4());
             //TODO 3-2  There are three cases 
@@ -425,17 +429,35 @@ bool AS_Link_Stat::update_map(){
             //          3. Routing table have information about IP address of segment.
             //          
 
-            if( false /*delete this*/){
+            if(this->get_AS_IP().get_IPv4() == target_ip){
                 // Case 1 IP address of segment is same as this AS.
-
+				continue ;
             }
-            else if(false /*delete this*/){
+            else if(rt_idx == -1){
                 // Case 2 Routing table haven't yet known about IP address of segment.
                 // We should make new Routing_Info for rt_table.
                 // And initialize this Routing_Info.
                 // Routing_Table::init_and_add_rt_info() will help this
                 // Routing_Table_LS::init_rt_table() should be a good reference.
                 // Do we change the value 'ret'?
+
+				// if every map of each ASN has same val.
+				Routing_Info	*new_rt_info = rt_table.init_and_add_rt_info();
+				Forward_Info	fw_info = this->get_fw_info(fw_idx);
+				uint32_t		*tmp_metric = new uint32_t[num_AS];
+
+				new_rt_info->set_IP_prefix(ip_tmp);
+				new_rt_info->set_additional_data(add_t::ASN, fw_idx, &target_ASN);
+				new_rt_info->set_gateway(target_ip);
+				new_rt_info->set_total_metric(INF);
+
+				for (int data_idx = 0; data_idx < num_AS; data_idx++)
+						tmp_metric[data_idx] = body[(num_AS + 3) * i + 3 + data_idx];
+
+				new_rt_info->set_additional_data(metric_to_AS, num_AS, tmp_metric);
+				delete[] tmp_metric;
+
+				ret = true;
             }
             else{
                 // Case 3 Routing table have information about IP address of segment.
@@ -443,10 +465,22 @@ bool AS_Link_Stat::update_map(){
                 // Updated value is in the packet body.
                 // We must always update the value. 
                 // Do we always change the value 'ret'? 
-                
+				Routing_Info	*target_rt_info = rt_table.get_rt_info(rt_idx);
+				uint32_t		target_data;
+				uint32_t		new_data;
+
+				for (int data_idx = 0; data_idx < num_AS; data_idx++)
+				{
+					target_data = target_rt_info->get_additional_data_idx(metric_to_AS, data_idx);
+					new_data = body[(num_AS + 3) * i + 3 + data_idx];
+					if (target_data != new_data)
+					{
+						target_rt_info->set_additional_data_idx(metric_to_AS, data_idx, new_data);
+						ret = true;
+					}
+				}
             }
         }
-
         delete[] body;
     }
     return ret;
@@ -480,9 +514,9 @@ void AS_Link_Stat::update_table_dijkstra(){
         Routing_Info* ptr_rt_info = get_rt_info(rt_idx);
         
         // change the value correctly.
-        val_fir = 0; 
-        val_sec = 0;
-        val_thr = 0;
+        val_fir = fw_info.get_metric(); 
+        val_sec = ptr_rt_info->get_additional_data_idx(add_t::ASN, rt_idx);
+        val_thr = ptr_rt_info->get_gateway();
         input_tuple = tuiu(val_fir, val_sec, val_thr);
         dijk_queue.push(input_tuple);
     }
@@ -492,6 +526,7 @@ void AS_Link_Stat::update_table_dijkstra(){
         output_tuple = dijk_queue.top();
         dijk_queue.pop();
 
+		// printf("test : AS %d, %d\n", this->get_ASN(), std::get<1>(output_tuple));
         //check that this AS has been travelled
         if(check_trip[std::get<1>(output_tuple)]){
             continue;
@@ -508,15 +543,41 @@ void AS_Link_Stat::update_table_dijkstra(){
                 break;
         }
         
-        // set the correct value
-        ptr_rt_info->set_total_metric(INF);
-        ptr_rt_info->set_gateway(0);
+        // // set the correct value
+		uint32_t		total_metric = std::get<0>(output_tuple);
+		uint32_t		trip_AS = std::get<1>(output_tuple);
+		uint32_t		gateway = std::get<2>(output_tuple);
+		uint32_t		tmp_metric = 0;
+		uint32_t		tmp_AS = 0;
+		uint32_t		tmp_gateway = 0;
+        // Routing_Info	*trip_rt_info;
+		// while (1)
+		// {
+		// 	for (int idx = 0; idx < num_AS; idx++)
+		// 	{
+		// 		uint32_t	data = ptr_rt_info->get_additional_data_idx(metric_to_AS, idx);
+		// 		if (data != INF && !check_trip[idx])
+		// 		{
+		// 			check_trip[idx] = true;
+		// 			tmp_metric += data;
+		// 			tmp_AS = idx;
+		// 			for (int rt_idx = 0; rt_idx < num_AS; rt_idx++)
+		// 			{
+		// 				if ()
+		// 				tmp_gateway = 
+		// 			}
+		// 		}
+		// 	}
+		// }
+		
+        ptr_rt_info->set_total_metric(total_metric);
+        ptr_rt_info->set_gateway(gateway);
 
         
         // push correct tuiu into priority queue. Note that INF means disconnection
         for(int i = 0; false;){
             
-            input_tuple = tuiu(0,0,0);
+            input_tuple = tuiu(total_metric, std::get<1>(output_tuple), gateway);
             dijk_queue.push(input_tuple);
         }
 
@@ -532,18 +593,60 @@ void AS_Link_Stat::send_packet_neighbor(){
     
     // TODO 5-1 Allocate memory for body using 'new'. And fill the body segment.
     // Note that packet in Link-state routing protocol, information of AS itself should be included.
-    int body_size;
-    uint32_t* body = new uint32_t[body_size];
-
-    for(int i = 0;false;i++){
-
+    int			body_size = (num_AS + 3) * (rt_sz + 1);
+    uint16_t	len = 4 * (body_size + 4);
+    uint32_t*	body = new uint32_t[body_size];
+	
+    for(int i = 0; i < rt_sz + 1; i++){
+		if (i != rt_sz)
+		{
+			Routing_Info	*body_rt_info = this->get_rt_info(i);
+			body[(num_AS + 3) * i] = body_rt_info->get_IP_prefix().get_IPv4();
+			body[(num_AS + 3) * i + 1] = body_rt_info->get_IP_prefix().get_netmask();
+			body[(num_AS + 3) * i + 2] = body_rt_info->get_additional_data_idx(add_t::ASN, i);
+			for (int as_idx = 0; as_idx < num_AS; as_idx++)
+				body[(num_AS + 3) * i + 3 + as_idx] = body_rt_info->get_additional_data_idx(metric_to_AS, as_idx);
+		}
+		else
+		{
+			body[(num_AS + 3) * i] = this->get_AS_IP().get_IPv4();
+			body[(num_AS + 3) * i + 1] = this->get_AS_IP().get_netmask();
+			body[(num_AS + 3) * i + 2] = this->get_ASN();
+			for (int AS_idx = 0; AS_idx < num_AS; AS_idx++)
+				body[(num_AS + 3) * i + 3 + AS_idx] = INF;
+			for (int idx = 0; idx < num_AS; idx++)
+			{
+				if (idx < rt_sz)
+				{
+					Routing_Info	*body_rt_info = this->get_rt_info(idx);
+					uint32_t		rt_metric = body_rt_info->get_additional_data_idx(metric_to_AS, this->get_ASN());
+					uint32_t		rt_ASN = body_rt_info->get_additional_data_idx(add_t::ASN, idx);
+					body[(num_AS + 3) * i + 3 + rt_ASN] = rt_metric;
+				}
+				else if (idx < this->get_fw_table_len())
+				{
+				for (int fw_idx = 0; fw_idx < this->get_fw_table_len(); fw_idx++)
+					{
+						uint32_t	fw_metric = this->get_fw_info(fw_idx).get_metric();
+						uint32_t	fw_ASN = this->get_ptr_neighbor(fw_idx)->get_ASN();
+						body[(num_AS + 3) * i + 3 + fw_ASN] = fw_metric;
+					}
+				}
+				else
+					break ;
+			}
+		}
     }
     
     for(int i = 0; i < num_nb; i++){
         Packet packet;
         // TODO 5-2 set the value of packet without timestamp.
         // enumeration in forward.hpp will help this.
-
+		packet.set_body(len, body);
+		packet.set_dest(this->get_ptr_neighbor(i)->get_AS_IP().get_IPv4());
+		packet.set_protocol(Link_State);
+		packet.set_source(this->get_AS_IP().get_IPv4());
+		packet.set_type(Update);
         packet.set_timestamp(timestamp);
         this->get_ptr_neighbor(i)->receive_packet_neighbor(packet);
     }

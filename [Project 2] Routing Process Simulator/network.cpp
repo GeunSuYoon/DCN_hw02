@@ -195,6 +195,7 @@ void Network::init_simulation(){
         timestamp++;
         check_update_continue = false;
         for(int i = 0; i < this->num_AS_net; i++){
+			// printf("test : update AS %d\n", i);
             tmp = AS[i]->update_rt_table();
             check_update_continue |= tmp;
             if(tmp)
