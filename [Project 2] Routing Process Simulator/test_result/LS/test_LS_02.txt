@@ -1,0 +1,135 @@
+==== Routing Table ====
+IP of AS : 147.45.0.0
+ASN : 0
+
+IP destination : 147.46.0.0
+IP dest_netmask : 255.254.0.0
+IP gateway : 147.46.0.0
+Total metric : 2
+Metric to AS : 2 INF 3 INF INF 
+
+IP destination : 148.0.0.0
+IP dest_netmask : 255.0.0.0
+IP gateway : 147.46.0.0
+Total metric : 5
+Metric to AS : INF 3 INF 4 INF 
+
+IP destination : 150.0.0.0
+IP dest_netmask : 254.0.0.0
+IP gateway : 147.46.0.0
+Total metric : 9
+Metric to AS : INF INF 4 INF 5 
+
+IP destination : 160.0.0.0
+IP dest_netmask : 255.255.0.0
+IP gateway : 147.46.0.0
+Total metric : 14
+Metric to AS : INF INF INF 5 INF 
+==== Routing Table ====
+IP of AS : 147.46.0.0
+ASN : 1
+
+IP destination : 147.45.0.0
+IP dest_netmask : 255.255.0.0
+IP gateway : 147.45.0.0
+Total metric : 2
+Metric to AS : INF 2 INF INF INF 
+
+IP destination : 148.0.0.0
+IP dest_netmask : 255.0.0.0
+IP gateway : 148.0.0.0
+Total metric : 3
+Metric to AS : INF 3 INF 4 INF 
+
+IP destination : 150.0.0.0
+IP dest_netmask : 254.0.0.0
+IP gateway : 148.0.0.0
+Total metric : 7
+Metric to AS : INF INF 4 INF 5 
+
+IP destination : 160.0.0.0
+IP dest_netmask : 255.255.0.0
+IP gateway : 148.0.0.0
+Total metric : 12
+Metric to AS : INF INF INF 5 INF 
+==== Routing Table ====
+IP of AS : 148.0.0.0
+ASN : 2
+
+IP destination : 147.46.0.0
+IP dest_netmask : 255.254.0.0
+IP gateway : 147.46.0.0
+Total metric : 3
+Metric to AS : 2 INF 3 INF INF 
+
+IP destination : 150.0.0.0
+IP dest_netmask : 254.0.0.0
+IP gateway : 150.0.0.0
+Total metric : 4
+Metric to AS : INF INF 4 INF 5 
+
+IP destination : 147.45.0.0
+IP dest_netmask : 255.255.0.0
+IP gateway : 147.46.0.0
+Total metric : 5
+Metric to AS : INF 2 INF INF INF 
+
+IP destination : 160.0.0.0
+IP dest_netmask : 255.255.0.0
+IP gateway : 150.0.0.0
+Total metric : 9
+Metric to AS : INF INF INF 5 INF 
+==== Routing Table ====
+IP of AS : 150.0.0.0
+ASN : 3
+
+IP destination : 148.0.0.0
+IP dest_netmask : 255.0.0.0
+IP gateway : 148.0.0.0
+Total metric : 4
+Metric to AS : INF 3 INF 4 INF 
+
+IP destination : 160.0.0.0
+IP dest_netmask : 255.255.0.0
+IP gateway : 160.0.0.0
+Total metric : 5
+Metric to AS : INF INF INF 5 INF 
+
+IP destination : 147.46.0.0
+IP dest_netmask : 255.254.0.0
+IP gateway : 148.0.0.0
+Total metric : 7
+Metric to AS : 2 INF 3 INF INF 
+
+IP destination : 147.45.0.0
+IP dest_netmask : 255.255.0.0
+IP gateway : 148.0.0.0
+Total metric : 9
+Metric to AS : INF 2 INF INF INF 
+==== Routing Table ====
+IP of AS : 160.0.0.0
+ASN : 4
+
+IP destination : 150.0.0.0
+IP dest_netmask : 254.0.0.0
+IP gateway : 150.0.0.0
+Total metric : 5
+Metric to AS : INF INF 4 INF 5 
+
+IP destination : 148.0.0.0
+IP dest_netmask : 255.0.0.0
+IP gateway : 150.0.0.0
+Total metric : 9
+Metric to AS : INF 3 INF 4 INF 
+
+IP destination : 147.46.0.0
+IP dest_netmask : 255.254.0.0
+IP gateway : 150.0.0.0
+Total metric : 12
+Metric to AS : 2 INF 3 INF INF 
+
+IP destination : 147.45.0.0
+IP dest_netmask : 255.255.0.0
+IP gateway : 150.0.0.0
+Total metric : 14
+Metric to AS : INF 2 INF INF INF

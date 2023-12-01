@@ -1,0 +1,360 @@
+==== Routing Table ====
+IP of AS : 138.0.0.0
+ASN : 0
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 139.0.0.0
+Total metric : 1
+path to AS : 139.0.0.0
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 1
+path to AS : 140.0.0.0
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 143.0.0.0
+Total metric : 1
+path to AS : 143.0.0.0
+
+IP destination : 145.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 1
+path to AS : 145.0.0.0
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 139.0.0.0
+Total metric : 2
+path to AS : 139.0.0.0 - 141.0.0.0
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 143.0.0.0
+Total metric : 2
+path to AS : 143.0.0.0 - 142.0.0.0
+
+IP destination : 146.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 2
+path to AS : 145.0.0.0 - 146.0.0.0
+==== Routing Table ====
+IP of AS : 139.0.0.0
+ASN : 1
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 1
+path to AS : 138.0.0.0
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 1
+path to AS : 140.0.0.0
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 1
+path to AS : 141.0.0.0
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 2
+path to AS : 138.0.0.0 - 143.0.0.0
+
+IP destination : 145.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 2
+path to AS : 138.0.0.0 - 145.0.0.0
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 2
+path to AS : 141.0.0.0 - 142.0.0.0
+
+IP destination : 146.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 3
+path to AS : 138.0.0.0 - 145.0.0.0 - 146.0.0.0
+==== Routing Table ====
+IP of AS : 140.0.0.0
+ASN : 2
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 1
+path to AS : 138.0.0.0
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 139.0.0.0
+Total metric : 1
+path to AS : 139.0.0.0
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 1
+path to AS : 141.0.0.0
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 143.0.0.0
+Total metric : 1
+path to AS : 143.0.0.0
+
+IP destination : 145.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 2
+path to AS : 138.0.0.0 - 145.0.0.0
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 2
+path to AS : 141.0.0.0 - 142.0.0.0
+
+IP destination : 146.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 3
+path to AS : 138.0.0.0 - 145.0.0.0 - 146.0.0.0
+==== Routing Table ====
+IP of AS : 141.0.0.0
+ASN : 3
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 139.0.0.0
+Total metric : 1
+path to AS : 139.0.0.0
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 1
+path to AS : 140.0.0.0
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 142.0.0.0
+Total metric : 1
+path to AS : 142.0.0.0
+
+IP destination : 145.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 1
+path to AS : 145.0.0.0
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 139.0.0.0
+Total metric : 2
+path to AS : 139.0.0.0 - 138.0.0.0
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 2
+path to AS : 140.0.0.0 - 143.0.0.0
+
+IP destination : 146.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 2
+path to AS : 145.0.0.0 - 146.0.0.0
+==== Routing Table ====
+IP of AS : 142.0.0.0
+ASN : 4
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 1
+path to AS : 141.0.0.0
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 143.0.0.0
+Total metric : 1
+path to AS : 143.0.0.0
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 2
+path to AS : 141.0.0.0 - 139.0.0.0
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 2
+path to AS : 141.0.0.0 - 140.0.0.0
+
+IP destination : 145.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 2
+path to AS : 141.0.0.0 - 145.0.0.0
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 143.0.0.0
+Total metric : 2
+path to AS : 143.0.0.0 - 138.0.0.0
+
+IP destination : 146.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 3
+path to AS : 141.0.0.0 - 145.0.0.0 - 146.0.0.0
+==== Routing Table ====
+IP of AS : 143.0.0.0
+ASN : 5
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 1
+path to AS : 138.0.0.0
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 1
+path to AS : 140.0.0.0
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 142.0.0.0
+Total metric : 1
+path to AS : 142.0.0.0
+
+IP destination : 145.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 1
+path to AS : 145.0.0.0
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 2
+path to AS : 138.0.0.0 - 139.0.0.0
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 140.0.0.0
+Total metric : 2
+path to AS : 140.0.0.0 - 141.0.0.0
+
+IP destination : 146.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 2
+path to AS : 145.0.0.0 - 146.0.0.0
+==== Routing Table ====
+IP of AS : 145.0.0.0
+ASN : 6
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 1
+path to AS : 138.0.0.0
+
+IP destination : 146.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 146.0.0.0
+Total metric : 1
+path to AS : 146.0.0.0
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 143.0.0.0
+Total metric : 1
+path to AS : 143.0.0.0
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 1
+path to AS : 141.0.0.0
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 2
+path to AS : 138.0.0.0 - 139.0.0.0
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 138.0.0.0
+Total metric : 2
+path to AS : 138.0.0.0 - 140.0.0.0
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 141.0.0.0
+Total metric : 2
+path to AS : 141.0.0.0 - 142.0.0.0
+==== Routing Table ====
+IP of AS : 146.0.0.0
+ASN : 7
+
+IP destination : 145.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 1
+path to AS : 145.0.0.0
+
+IP destination : 138.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 2
+path to AS : 145.0.0.0 - 138.0.0.0
+
+IP destination : 143.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 2
+path to AS : 145.0.0.0 - 143.0.0.0
+
+IP destination : 141.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 2
+path to AS : 145.0.0.0 - 141.0.0.0
+
+IP destination : 139.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 3
+path to AS : 145.0.0.0 - 138.0.0.0 - 139.0.0.0
+
+IP destination : 140.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 3
+path to AS : 145.0.0.0 - 138.0.0.0 - 140.0.0.0
+
+IP destination : 142.0.0.0
+IP dest_netmask : 255.255.255.0
+IP gateway : 145.0.0.0
+Total metric : 3
+path to AS : 145.0.0.0 - 141.0.0.0 - 142.0.0.0

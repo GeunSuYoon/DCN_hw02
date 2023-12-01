@@ -1,0 +1,258 @@
+9c9
+< Metric via neighbor : 7 19 23 37 
+---
+> Metric to AS : 7 INF 10 15 INF INF INF INF 
+15c15
+< Metric via neighbor : 17 9 13 27 
+---
+> Metric to AS : 9 10 INF 11 INF 2 INF INF 
+21c21
+< Metric via neighbor : 19 11 14 25 
+---
+> Metric to AS : 14 INF 2 INF 9 INF 8 INF 
+27c27
+< Metric via neighbor : 27 19 19 17 
+---
+> Metric to AS : 17 INF INF 6 INF 8 INF 5 
+33c33
+< Metric via neighbor : 22 20 24 23 
+---
+> Metric to AS : INF 15 11 INF 6 INF 6 INF 
+39c39
+< Metric via neighbor : 28 20 20 29 
+---
+> Metric to AS : INF INF INF 6 INF 9 INF INF 
+45c45
+< Metric via neighbor : 32 24 24 22 
+---
+> Metric to AS : INF INF INF INF INF INF 5 INF 
+54c54
+< Metric via neighbor : 7 19 35 
+---
+> Metric to AS : INF 7 9 INF INF 14 17 INF 
+60c60
+< Metric via neighbor : 16 10 26 
+---
+> Metric to AS : 9 10 INF 11 INF 2 INF INF 
+66c66
+< Metric via neighbor : 27 21 15 
+---
+> Metric to AS : INF 15 11 INF 6 INF 6 INF 
+72c72
+< Metric via neighbor : 18 12 28 
+---
+> Metric to AS : 14 INF 2 INF 9 INF 8 INF 
+78c78
+< Metric via neighbor : 24 20 21 
+---
+> Metric to AS : 17 INF INF 6 INF 8 INF 5 
+84c84
+< Metric via neighbor : 27 21 21 
+---
+> Metric to AS : INF INF INF 6 INF 9 INF INF 
+90c90
+< Metric via neighbor : 29 25 26 
+---
+> Metric to AS : INF INF INF INF INF INF 5 INF 
+99c99
+< Metric via neighbor : 9 17 31 13 
+---
+> Metric to AS : INF 7 9 INF INF 14 17 INF 
+105c105
+< Metric via neighbor : 16 10 26 14 
+---
+> Metric to AS : 7 INF 10 15 INF INF INF INF 
+111c111
+< Metric via neighbor : 29 25 11 15 
+---
+> Metric to AS : INF 15 11 INF 6 INF 6 INF 
+117c117
+< Metric via neighbor : 20 22 24 2 
+---
+> Metric to AS : 14 INF 2 INF 9 INF 8 INF 
+123c123
+< Metric via neighbor : 26 30 17 10 
+---
+> Metric to AS : 17 INF INF 6 INF 8 INF 5 
+129c129
+< Metric via neighbor : 29 31 17 11 
+---
+> Metric to AS : INF INF INF 6 INF 9 INF INF 
+135c135
+< Metric via neighbor : 31 35 22 15 
+---
+> Metric to AS : INF INF INF INF INF INF 5 INF 
+144c144
+< Metric via neighbor : 15 21 27 26 
+---
+> Metric to AS : 7 INF 10 15 INF INF INF INF 
+150c150
+< Metric via neighbor : 25 11 17 16 
+---
+> Metric to AS : 9 10 INF 11 INF 2 INF INF 
+156c156
+< Metric via neighbor : 36 22 6 18 
+---
+> Metric to AS : INF INF INF 6 INF 9 INF INF 
+162c162
+< Metric via neighbor : 35 21 18 6 
+---
+> Metric to AS : 17 INF INF 6 INF 8 INF 5 
+168c168
+< Metric via neighbor : 22 20 26 23 
+---
+> Metric to AS : INF 7 9 INF INF 14 17 INF 
+174c174
+< Metric via neighbor : 27 13 15 14 
+---
+> Metric to AS : 14 INF 2 INF 9 INF 8 INF 
+180c180
+< Metric via neighbor : 40 26 23 11 
+---
+> Metric to AS : INF INF INF INF INF INF 5 INF 
+189c189
+< Metric via neighbor : 6 22 
+---
+> Metric to AS : INF 15 11 INF 6 INF 6 INF 
+195c195
+< Metric via neighbor : 19 9 
+---
+> Metric to AS : 14 INF 2 INF 9 INF 8 INF 
+199c199
+< IP gateway : 141.0.0.0
+---
+> IP gateway : 143.0.0.0
+201c201
+< Metric via neighbor : 21 21 
+---
+> Metric to AS : 7 INF 10 15 INF INF INF INF 
+207c207
+< Metric via neighbor : 17 11 
+---
+> Metric to AS : 9 10 INF 11 INF 2 INF INF 
+213c213
+< Metric via neighbor : 12 17 
+---
+> Metric to AS : 17 INF INF 6 INF 8 INF 5 
+219c219
+< Metric via neighbor : 26 20 
+---
+> Metric to AS : INF 7 9 INF INF 14 17 INF 
+225c225
+< Metric via neighbor : 17 22 
+---
+> Metric to AS : INF INF INF INF INF INF 5 INF 
+234c234
+< Metric via neighbor : 14 11 29 25 
+---
+> Metric to AS : INF 7 9 INF INF 14 17 INF 
+240c240
+< Metric via neighbor : 20 2 20 18 
+---
+> Metric to AS : 9 10 INF 11 INF 2 INF INF 
+246c246
+< Metric via neighbor : 31 13 9 20 
+---
+> Metric to AS : INF INF INF 6 INF 9 INF INF 
+252c252
+< Metric via neighbor : 28 12 21 8 
+---
+> Metric to AS : 17 INF INF 6 INF 8 INF 5 
+258c258
+< Metric via neighbor : 18 12 30 28 
+---
+> Metric to AS : 7 INF 10 15 INF INF INF INF 
+264c264
+< Metric via neighbor : 31 13 15 14 
+---
+> Metric to AS : INF 15 11 INF 6 INF 6 INF 
+270c270
+< Metric via neighbor : 33 17 26 13 
+---
+> Metric to AS : INF INF INF INF INF INF 5 INF 
+279c279
+< Metric via neighbor : 17 27 19 26 
+---
+> Metric to AS : INF 7 9 INF INF 14 17 INF 
+281c281
+< IP destination : 146.0.0.0
+---
+> IP destination : 141.0.0.0
+283,285c283,285
+< IP gateway : 146.0.0.0
+< Total metric : 5
+< Metric via neighbor : 39 5 21 17 
+---
+> IP gateway : 141.0.0.0
+> Total metric : 6
+> Metric to AS : INF 15 11 INF 6 INF 6 INF 
+291c291
+< Metric via neighbor : 28 18 8 19 
+---
+> Metric to AS : 14 INF 2 INF 9 INF 8 INF 
+293c293
+< IP destination : 141.0.0.0
+---
+> IP destination : 146.0.0.0
+295,297c295,297
+< IP gateway : 141.0.0.0
+< Total metric : 6
+< Metric via neighbor : 37 16 21 6 
+---
+> IP gateway : 146.0.0.0
+> Total metric : 5
+> Metric to AS : INF INF INF INF INF INF 5 INF 
+303c303
+< Metric via neighbor : 24 30 20 21 
+---
+> Metric to AS : 7 INF 10 15 INF INF INF INF 
+309c309
+< Metric via neighbor : 26 20 10 17 
+---
+> Metric to AS : 9 10 INF 11 INF 2 INF INF 
+315c315
+< Metric via neighbor : 37 22 17 12 
+---
+> Metric to AS : INF INF INF 6 INF 9 INF INF 
+324c324
+< Metric via neighbor : 5 
+---
+> Metric to AS : 17 INF INF 6 INF 8 INF 5 
+330c330
+< Metric via neighbor : 22 
+---
+> Metric to AS : INF 7 9 INF INF 14 17 INF 
+332c332
+< IP destination : 143.0.0.0
+---
+> IP destination : 141.0.0.0
+335,336c335,336
+< Total metric : 13
+< Metric via neighbor : 13 
+---
+> Total metric : 11
+> Metric to AS : INF 15 11 INF 6 INF 6 INF 
+338c338
+< IP destination : 141.0.0.0
+---
+> IP destination : 143.0.0.0
+341,342c341,342
+< Total metric : 11
+< Metric via neighbor : 11 
+---
+> Total metric : 13
+> Metric to AS : 14 INF 2 INF 9 INF 8 INF 
+348c348
+< Metric via neighbor : 25 
+---
+> Metric to AS : 7 INF 10 15 INF INF INF INF 
+354c354
+< Metric via neighbor : 15 
+---
+> Metric to AS : 9 10 INF 11 INF 2 INF INF 
+360c360
+< Metric via neighbor : 17
+\ No newline at end of file
+---
+> Metric to AS : INF INF INF 6 INF 9 INF INF 
+\ No newline at end of file
